@@ -5,6 +5,7 @@ A tool to upload images/files from the command line and generate a direct link w
 Project uses pipenv to install deps. Tool requires Python 3.6+.
 
     $ git clone https://github.com/idealwebsolutions/github-issue-attachment-uploader.git
+    $ cd github-issue-attachment-uploader
     $ pipenv install
 
 # Usage
