@@ -17,8 +17,7 @@ GITHUB_SESSION_ROUTE = 'session'
 GITHUB_NEW_ISSUE_ROUTE = 'issues/new'
 GITHUB_ASSETS_ROUTE = 'upload/policies/assets'
 
-async def run_request_flow(fp, config):
-    loop = get_event_loop()
+async def run_request_flow(loop, fp, config):
     session = Session()
     ua = UserAgent()
     
@@ -184,4 +183,4 @@ async def run_request_flow(fp, config):
 
 def start_upload(fp, config):
     loop = get_event_loop()
-    loop.run_until_complete(run_request_flow(fp, config))
+    loop.run_until_complete(run_request_flow(loop, fp, config))
