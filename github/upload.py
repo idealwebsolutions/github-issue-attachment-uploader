@@ -88,7 +88,8 @@ async def run_request_flow(loop, fp, config):
     # Parse token and repo id
     tree = fromstring(response.text)
 
-    target = tree.xpath('//div[contains(@class, "write-content")]')
+    # TODO: try alt divs in case main element doesnt find attribs
+    target = tree.xpath('//file-attachment[contains(@class, "js-upload-markdown-image")]')
     attribs = dict((x, y) for x, y in target[0].items())
     
     img_upload_token = attribs['data-upload-policy-authenticity-token']
