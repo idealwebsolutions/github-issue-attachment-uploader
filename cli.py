@@ -6,7 +6,7 @@ from os.path import expanduser, join, exists
 from os import environ
 from getpass import getpass
 from logging import basicConfig, getLogger, disable, DEBUG
-from github.upload import start_upload
+from github.upload import upload_new_asset
 
 basicConfig(level=DEBUG)
 logger = getLogger(__name__)
@@ -93,7 +93,7 @@ def main():
         config['repository'] = args.repository[0]
 
     # Begin uploading
-    start_upload(args.file[0], config)
+    print(upload_new_asset(args.file[0], config))
 
 if __name__ == '__main__':
     main()

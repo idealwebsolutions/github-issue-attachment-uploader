@@ -1,5 +1,5 @@
 # github-issues-attachment-uploader
-A tool to upload images/files from the command line and generate a direct link without having to create issues on the website
+A tool to upload images/files from the command line and generate a direct link without having to create issues on the website. Useful for generating asset links on the go.
 
 # Install
 Project uses pipenv to install deps. Tool requires Python 3.6+.
