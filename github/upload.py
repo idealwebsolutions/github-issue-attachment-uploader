@@ -44,7 +44,7 @@ async def run_request_flow(loop, fp, config):
 
     assert auth_token
     assert utf8
-    
+
     # Sign in
     response = await loop.run_in_executor(
         None,
@@ -89,13 +89,25 @@ async def run_request_flow(loop, fp, config):
     tree = fromstring(response.text)
 
     # TODO: try alt divs in case main element doesnt find attribs
-    target = tree.xpath('//file-attachment[contains(@class, "js-upload-markdown-image")]')
-    attribs = dict((x, y) for x, y in target[0].items())
+    root = tree.xpath('//file-attachment[contains(@class, "js-upload-markdown-image")]')
     
-    img_upload_token = attribs['data-upload-policy-authenticity-token']
+    if len(root) == 0:
+        raise IndexError('Could not find file-attachment element, likely due to invalid login')
+    
+    file_attachment = root[0]
+    # Find csrf token in subelement (input)
+    csrf = file_attachment.find('.//input[@class="js-data-upload-policy-url-csrf"]')
+    
+    if csrf is None:
+        raise TypeError('CSRF token is missing, unable to continue')
+
+    attribs = dict((x, y) for x, y in file_attachment.items())
+    csrf_attribs = dict((x, y) for x, y in csrf.items())    
+
+    csrf_token = csrf_attribs['value'] # csrf token
     repo_id = attribs['data-upload-repository-id']
 
-    assert img_upload_token
+    assert csrf_token
     assert repo_id
 
     filename = basename(fp.name)
@@ -113,7 +125,7 @@ async def run_request_flow(loop, fp, config):
             'name': filename,
             'size': size,
             'content_type': content_type,
-            'authenticity_token': img_upload_token,
+            'authenticity_token': csrf_token,
             'repository_id': repository_id
         }
     )
