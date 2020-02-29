@@ -11,6 +11,7 @@ requests = "*"
 
 [dev-packages]
 pylint = "*"
+pipenv-setup = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.7"
