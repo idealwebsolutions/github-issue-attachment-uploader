@@ -2,7 +2,7 @@
 A tool to upload images/files from the command line and generate a direct link without having to create issues on the website. Useful for generating asset links on the go.
 
 # Install
-Project uses pipenv to install deps. Tool requires Python 3.6+.
+Project uses pipenv to install deps. Tool requires Python 3.7+.
 
     $ git clone https://github.com/idealwebsolutions/github-issue-attachment-uploader.git
     $ cd github-issue-attachment-uploader
@@ -11,7 +11,7 @@ Project uses pipenv to install deps. Tool requires Python 3.6+.
 # Usage
 
     $ pipenv shell
-    $ python cli.py <path/to/file> [--repository <name>] [--debug]
+    $ python bin/upload-attachment <path/to/file> [--repository <name>] [--debug]
 
 First time usage will request user credentials (only username and default repository is stored) to save for future uses (saved in HOME directory as `.gh_upload_attachment`). Passwords will be requested per usage and are not saved/stored ever.
 
