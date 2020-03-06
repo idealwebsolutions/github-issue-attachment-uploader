@@ -101,15 +101,13 @@ def _basic_login(session, credentials):
     tree = fromstring(response.text)
     # Pick out auth token and utf8 fields for login
     auth_token = tree.forms[0].fields['authenticity_token']
-    utf8 = tree.forms[0].fields['utf8']
     login_response = session.post(
         '{}/{}'.format(GITHUB_BASE_URL, GITHUB_SESSION_ROUTE), 
         data = {
             'authenticity_token': auth_token,
             'commit': GITHUB_COMMIT_ACTION,
             'login': username,
-            'password': password,
-            'utf8': utf8
+            'password': password
         }, 
         headers = {
             'content-type': 'application/x-www-form-urlencoded',
