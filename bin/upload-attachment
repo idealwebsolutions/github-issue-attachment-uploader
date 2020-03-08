@@ -2,8 +2,9 @@
 
 from argparse import ArgumentParser, FileType
 from configparser import ConfigParser
-from os.path import expanduser, join, exists
-from os import environ
+from os.path import basename, expanduser, join, exists
+from os import environ, fstat
+from mimetypes import guess_type
 from getpass import getpass
 from logging import basicConfig, getLogger, disable, DEBUG
 from github.upload import upload_new_asset
@@ -91,7 +92,14 @@ def main():
     # Use selected repository instead of default
     if args.repository:
         config['repository'] = args.repository[0]
-
+    
+    # Parse filename, size and content type of asset
+    #filename = basename(asset.name)
+    config['filename'] = basename(args.file[0].name)
+    # size = str(fstat(asset.fileno()).st_size)
+    config['size'] = str(fstat(args.file[0].fileno()).st_size)
+    # content_type = guess_type(filename)[0]
+    config['content_type'] = guess_type(config['filename'])[0]
     # Begin uploading
     print(upload_new_asset(args.file[0], config))
 

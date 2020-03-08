@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 
-from os.path import basename
-from os import fstat
 from requests_toolbelt import MultipartEncoder
-from mimetypes import guess_type
 from fake_useragent import UserAgent
 from lxml.html import fromstring
 from requests import codes, Session
@@ -122,10 +119,9 @@ def upload_new_asset(asset, config):
     """ Uploads a new asset to github """
     if type(config) is not dict:
         raise TypeError('config is not a dict')
-    # Parse filename, size and content type of asset
-    filename = basename(asset.name)
-    size = str(fstat(asset.fileno()).st_size)
-    content_type = guess_type(filename)[0]
+    filename = config['filename']
+    size = config['size']
+    content_type = config['content_type']
     # Create new session
     with Session() as session:
         ua = UserAgent(fallback=FALLBACK_UA)
