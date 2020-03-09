@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 from requests_toolbelt import MultipartEncoder
-from fake_useragent import UserAgent
 from lxml.html import fromstring
 from requests import codes, Session
 
@@ -13,7 +12,7 @@ GITHUB_NEW_ISSUE_ROUTE = 'issues/new'
 GITHUB_ASSETS_ROUTE = 'upload/policies/assets'
 GITHUB_COMMIT_ACTION = 'Sign in'
 
-FALLBACK_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0'
+FALLBACK_UA = 'Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:73.0) Gecko/20100101 Firefox/73.0'
 DEFAULT_TIMEOUT_VALUE = 60
 
 def _finalize_upload(session, upload_url, file_upload_payload):
@@ -124,9 +123,7 @@ def upload_new_asset(asset, config):
     content_type = config['content_type']
     # Create new session
     with Session() as session:
-        ua = UserAgent(fallback=FALLBACK_UA)
-        # Set random user agent for session
-        session.headers['user_agent'] = ua.random
+        session.headers['user_agent'] = config.get('user-agent') or FALLBACK_UA
         # Login
         _basic_login(session, (config['username'], config['password']))
         # Create new issue and get repo id/csrf token for upload request

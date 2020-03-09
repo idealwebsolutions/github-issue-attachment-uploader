@@ -6,7 +6,6 @@ name = "pypi"
 [packages]
 lxml = "*"
 requests-toolbelt = "*"
-fake-useragent = "*"
 requests = "*"
 
 [dev-packages]
