@@ -1,7 +1,6 @@
 -i https://pypi.org/simple
 certifi==2019.11.28
 chardet==3.0.4
-fake-useragent==0.1.11
 idna==2.9
 lxml==4.5.0
 requests-toolbelt==0.9.1
