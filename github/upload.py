@@ -3,6 +3,7 @@
 from requests_toolbelt import MultipartEncoder
 from lxml.html import fromstring
 from requests import codes, Session
+from io import IOBase
 
 GITHUB_BASE_URL = 'https://github.com'
 
@@ -116,6 +117,7 @@ def _basic_login(session, credentials):
 
 def upload_new_asset(asset, config):
     """ Uploads a new asset to github """
+    assert isinstance(asset, IOBase), 'asset must be a file'
     if type(config) is not dict:
         raise TypeError('config is not a dict')
     filename = config['filename']
