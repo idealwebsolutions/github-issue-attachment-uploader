@@ -10,7 +10,7 @@ setup(
         "lxml==4.6.2",
         "requests==2.23.0",
         "requests-toolbelt==0.9.1",
-        "urllib3==1.25.8",
+        "urllib3==1.26.5",
     ],
     name="github-issue-attachment-uploader",
     version="1.0",
